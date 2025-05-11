@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Cart Component</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <style>
+      * {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Merriweather";
+}
+
+body{
+    background-color:#f8f8f8;
+    color:#333;
+    line-height:1.6;
+    padding:20px;
+}
+
+.breadcrumb{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    margin-bottom:20px;
+    color:#595959;
+}
+
+.breadcrumb a {
+    color:#006064;
+    text-decoration:none;
+}
+
+.breadcrumb a:hover {
+    text-decoration:underline;
+}
+
+.book-container {
+    max-width:1200px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;
+    background:#fff;
+    border-radius:8px;
+    padding:30px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.book-image-container {
+    flex:1;
+    min-width:300px;
+    position:relative;
+}
+
+.discount-badge {
+    position:absolute;
+    top:0;
+    left:0;
+    background-color:#8B2500;
+    color:white;
+    padding:8px 15px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.book-image {
+    width:100%;
+    max-width:360px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.book-details {
+    flex:2;
+    min-width:300px;
+}
+
+.book-title {
+    font-size:28px;
+    color:#333;
+    margin-bottom:10px;
+    line-height:1.3;
+}
+
+.book-author {
+    margin-bottom:15px;
+    font-size:16px;
+}
+
+.book-author a {
+    color:#006064;
+    text-decoration:none;
+}
+
+.book-author a:hover {
+    text-decoration:underline;
+}
+
+.rating {
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.stars {
+    color:#FFB900;
+    font-size:20px;
+    letter-spacing:2px;
+    margin-right:10px;
+}
+
+.rating-score {
+    color:#006064;
+    font-weight:bold;
+    margin-right:10px;
+}
+
+.review-count {
+    color:#666;
+}
+
+.review-link {
+    margin-left:20px;
+    color:#006064;
+    text-decoration:none;
+}
+
+.review-link:hover {
+    text-decoration:underline;
+}
+
+.divider {
+    height:1px;
+    background-color:#e0e0e0;
+    margin: 20px 0;
+    width:100%;
+}
+
+.format-section {
+    margin-bottom:20px;
+}
+
+.format-label {
+    font-size:16px;
+    color:#666;
+    margin-bottom:10px;
+}
+
+
+.price {
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.original-price {
+    color:#888;
+    text-decoration:line-through;
+    font-size:16px;
+    margin-right:10px;
+}
+
+.discount {
+    color:#006064;
+    font-size:16px;
+}
+
+.format-options {
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin: 15px 0;
+}
+
+.format-option {
+    border:2px solid #ddd;
+    border-radius:4px;
+    padding:10px 15px;
+    min-width:120px;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.2s;
+}
+
+.format-option:hover {
+    border-color:#999;
+}
+
+.format-option .selected {
+    border-color:#006064;
+    background-color:#f0f7f7
+}
+
+.format-name {
+    font-weight:bold;
+    display:block;
+    font-size:14px;
+}
+
+.format-price {
+    display:block;
+    margin-top:5px;
+    font-size:14px;
+}
+
+
+.formats-link {
+    color:#006064;
+    text-decoration:none;
+    font-size:14px;
+    display:inline-block;
+    margin-top:10px;
+}
+
+.formats-link:hover {
+    text-decoration:underline;
+}
+
+.members-reward {
+    background-color:#f7f7f7;
+    border-radius:4px;
+    padding:15px;
+    margin: 20px 0;
+    display:flex;
+    align-items:center;
+}
+
+.reward-icon {
+    margin-right:15px;
+    color:#006064;
+    font-size:24px;
+}
+
+.reward-text {
+    font-size:14px;
+    line-height:1.4;
+}
+
+.reward-highlight {
+    font-weight:bold;
+    color:#006064;
+}
+
+.reward-link {
+    color:#006064;
+    text-decoration:none;
+}
+
+.reward-link:hover {
+    text-decoration:underline;
+}
+
+.shipping-section {
+    background-color:#f9f9f9;
+    border:1px solid #e0e0e0;
+    border-radius:4px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.shipping-title {
+    font-weight:bold;
+    font-size:16px;
+    margin-bottom:10px;
+    color:#333;
+}
+
+.shipping-info {
+    color:#555;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.add-to-cart-btn, .pickup-btn {
+    width:100%;
+    padding:12px 15px;
+    border:none;
+    border-radius:4px;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+    transition:background-color 0.2s;
+    text-align:center;
+    margin-top:10px;
+}
+
+.add-to-cart-btn {
+    background-color:#1976D2;
+    color:white;
+}
+
+.add-to-cart-btn:hover {
+    background-color:#1565C0;
+}
+
+.pickup-btn {
+    background-color:#37474f;
+    color:white;
+}
+
+.pickup-btn:hover {
+    background-color:#263238;
+}
+
+.store-info {
+    font-size:14px;
+    margin-top:10px;
+    color:#555;
+}
+
+.store-name {
+    font-weight:bold;
+}
+
+.store-link {
+    color:#006064;
+    text-decoration:none;
+}
+
+.store-link:hover {
+    text-decoration:underline;
+}
+
+.wishlist-btn {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:none;
+    border:1px solid #ddd;
+    border-radius:4px;
+    padding:10px 15px;
+    font-size:14px;
+    color:#555;
+    cursor:pointer;
+    transition:all 0.2s;
+    margin-top:20px;
+    width:fit-content;
+}
+
+.wishlist-btn:hover {
+    border-color:#999;
+}
+
+.wishlist-icon {
+    margin-right:10px;
+    font-size:18px;
+}
+
+.promotion {
+    margin-top:20px;
+    color:#006064;
+    font-size:14px;
+}
+
+.promotion-item {
+    display:flex;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.promotion-icon {
+    margin-right:10px;
+    color:#4CAF50;
+}
+
+.notification {
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:15px 20px;
+    border-radius:4px;
+    color:white;
+    font-weight:bold;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    transform:translateX(200%);
+    transition:transform 0.3s ease out;
+}
+
+.notification.show {
+    transform:translateX(0);
+}
+
+.success{
+    background-color:#43A047;
+}
+
+.remove {
+    background-color:#E53935;
+}
+
+.notification-icon {
+    margin-right:10px;
+    font-size: 20px;
+}
+
+.modal {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.3s;
+}
+
+.modal.active {
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-content {
+    background-color:white;
+    border-radius:8px;
+    width:90%;
+    max-width:500px;
+    height:90vh;
+    overflow-y:translate(-20px);
+    transition:transform 0.3s;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+.modal.active .modal-content {
+    transform:traslateY(0);
+}
+
+.modal-header {
+    padding:20px;
+    border-bottom:1px solid #eee;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-title {
+    font-size:20px;
+    font-weight:bold;
+}
+
+.close-modal {
+    background:none;
+    border:none;
+    font-size:24px;
+    cursor:pointer;
+    color:#777;
+}
+
+.modal-body {
+    padding:20px;
+}
+
+.cart-item {
+    display:flex;
+    margin-bottom:20px;
+    padding-bottom:20px;
+    border-bottom:1px solid #eee;
+}
+
+.cart-item-image {
+    width:80px;
+    margin-right:15px;
+}
+
+.cart-item-details {
+    flex:1;
+}
+
+.cart-item-title {
+    font-weight:bold;
+    margin-bottom:5px;
+    font-size:16px;
+}
+
+.cart-item-format, .cart-item-price {
+    font-size:14px;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.remove-item {
+    background:none;
+    border:none;
+    color:#E53935;
+    cursor:pointer;
+    font-size:14px;
+    padding:5px 0;
+    display:flex;
+    align-items:center;
+}
+
+.remove-icon {
+    margin-right:5px;
+}
+
+.cart-total {
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    font-size:18px;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.modal-footer {
+    padding:20px;
+    display:flex;
+    gap:10px;
+}
+
+.continue-btn, .checkout-btn {
+    flex:1;
+    padding:12px;
+    border-radius:4px;
+    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+}
+
+.continue-btn {
+    background-color:white;
+    border:1px solid #ddd;
+    color:#333;
+}
+
+.continue-btn:hover {
+    background-color:#f5f5f5;
+}
+
+.checkout-btn {
+    background-color:#1976D2;
+    color:white;
+    border:none;
+}
+
+.checkout-btn:hover {
+    background-color:#1565C0;
+}
+
+.cart-icon-container {
+    position:fixed;
+    top:20px;
+    right:20px;
+    background-color:white;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    cursor:pointer;
+    z-index:900;
+}
+
+.cart-icon {
+    font-size:30px;
+    color:#333;
+}
+
+.cart-badge{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    background-color:#E53935;
+    color:white;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:12px;
+    font-weight:bold;
+
+}
+
+@media (max-width:768px) {
+    .book-container {
+        padding:20px;
+    }
+
+    .book-title {
+        font-size:24px;
+    }
+
+    .format-options {
+        gap:8px;
+    }
+
+    .format-option {
+        min-width:100px;
+        padding:8px 12px;
+    }
+
+
+}
+    </style>
+</head>
+
+<body>
+   <div class="breadcrumb">
+        <a href="#">Home</a> &gt; <a href="#">Books</a>
+    </div>
+
+    <div class="cart-icon-container" id="cart-icon">
+        <div class="cart-icon">🛒</div>
+        <div class="cart-badge" id="cart-badge">0</div>
+    </div>
+
+    <div class="book-container">
+        <div class="book-image-container">
+            <div class="discount-badge">$3 OFF</div>
+            <img src="https://prodimage.images-bn.com/pimages/9780307742490_p0_v2_s600x595.jpg"; alt="The Wager book cover" class="book-image" id="book-cover">
+        </div>
+        
+        <div class="book-details">
+            <h1 class="book-title">The Wager: A Tale of Shipwreck, Mutiny and Murder</h1>
+            <p class="book-author">by <a href="#">David Grann</a></p>
+            
+            <div class="rating">
+                <div class="stars">★★★★<span style="color: #FFD700;">½</span></div>
+                <span class="rating-score">4.6</span>
+                <span class="review-count">(38)</span>
+                <a href="#" class="review-link">Write A Review</a>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="format-section">
+                <div class="price">$18.00</div>
+                <div>
+                    <span class="original-price">$21.00</span>
+                    <span class="discount">Save 14%</span>
+                </div>
+                
+                <div class="format-label">Select Format:</div>
+                <div class="format-options">
+                    <div class="format-option" data-format="Hardcover" data-price="30.00">
+                        <span class="format-name">Hardcover</span>
+                        <span class="format-price">$30.00</span>
+                    </div>
+                    <div class="format-option selected" data-format="Paperback" data-price="18.00">
+                        <span class="format-name">Paperback</span>
+                        <span class="format-price">$18.00</span>
+                    </div>
+                    <div class="format-option" data-format="eBook" data-price="14.99">
+                        <span class="format-name">eBook</span>
+                        <span class="format-price">$14.99</span>
+                    </div>
+                    <div class="format-option" data-format="Audiobook" data-price="0.00">
+                        <span class="format-name">Audiobook</span>
+                        <span class="format-price">$0.00</span>
+                    </div>
+                    <div class="format-option" data-format="Large Print" data-price="32.00">
+                        <span class="format-name">Large Print</span>
+                        <span class="format-price">$32.00</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="formats-link">View All Available Formats & Editions</a>
+            </div>
+            
+            <div class="members-reward">
+                <div class="reward-icon">🏆</div>
+                <div class="reward-text">
+                    Premium Members get an additional <span class="reward-highlight">10% off</span> AND collect stamps to save with <span class="reward-highlight">Rewards</span>.
+                    <br>10 stamps = $5 reward
+                    <a href="#" class="reward-link">Learn more</a>
+                </div>
+            </div>
+            
+            <div class="shipping-section">
+                <div class="shipping-title">SHIP THIS ITEM</div>
+                <div class="shipping-info">In stock. Ships in 1-2 days.</div>
+                <button class="add-to-cart-btn" id="add-to-cart-btn">ADD TO CART</button>
+                
+                <div class="shipping-title" style="margin-top: 20px;">PICK UP IN STORE</div>
+                <div class="shipping-info">Get it at <span class="store-name">Ellicott City</span>.</div>
+                <div class="store-info">Available within 2 business hours</div>
+                <a href="#" class="store-link">Check Availability at Nearby Stores</a>
+                <button class="pickup-btn">PICK UP IN STORE</button>
+            </div>
+            
+            <button class="wishlist-btn">
+                <span class="wishlist-icon">♡</span>
+                Add to Wishlist
+            </button>
+            
+            <div class="promotion">
+                <div class="promotion-item">
+                    <span class="promotion-icon">✓</span>
+                    Shop Mother's Day Gifts
+                </div>
+                <div class="promotion-item">
+                    <span class="promotion-icon">✓</span>
+                    Up to 25% Off Our Best Paperbacks
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart added notification -->
+    <div class="notification success" id="add-notification">
+        <span class="notification-icon">✓</span>
+        Item added to your cart!
+    </div>
+
+    <!-- Cart removed notification -->
+    <div class="notification remove" id="remove-notification">
+        <span class="notification-icon">✓</span>
+        Item removed from your cart!
+    </div>
+
+    <!-- Cart modal -->
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Your Cart</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="cart-items">
+                <!-- Cart items will be added dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="continue-btn" id="continue-shopping-btn">CONTINUE SHOPPING</button>
+                <button class="checkout-btn">CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+        <script>
+           // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const formatOptions = document.querySelectorAll('.format-option');
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            const cartBadge = document.getElementById('cart-badge');
+            const addNotification = document.getElementById('add-notification');
+            const removeNotification = document.getElementById('remove-notification');
+            const cartModal = document.getElementById('cart-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const continueShoppingBtn = document.getElementById('continue-shopping-btn');
+            const cartIcon = document.getElementById('cart-icon');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const bookCover = document.getElementById('book-cover');
+
+            // Set book cover image
+            bookCover.src = "https://prodimage.images-bn.com/pimages/9780307742490_p0_v2_s600x595.jpg";
+
+            // State
+            let selectedFormat = 'Paperback';
+            let selectedPrice = '18.00';
+            let cartItems = [];
+            let cartCount = 0;
+
+            // Helper Functions
+            function getNumericPrice(price) {
+                // Remove dollar sign and convert to number
+                if (typeof price === 'string') {
+                    return parseFloat(price.replace(/[$,]/g, ''));
+                }
+                return parseFloat(price);
+            }
+
+            function formatCurrency(price) {
+                // Handle empty or invalid values
+                if (price === null || price === undefined || price === '' || isNaN(price)) {
+                    return '$0.00';
+                }
+                
+                // Ensure we always have a dollar sign before the price
+                const priceStr = String(price);
+                return priceStr.startsWith('$') ? priceStr : `$${price}`;
+            }
+
+            function updateCartCount() {
+                cartCount = cartItems.length;
+                cartBadge.textContent = cartCount;
+            }
+
+            function showNotification(notification) {
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+
+            function removeFromCart(id) {
+                // Find and remove the item
+                cartItems = cartItems.filter(item => item.id !== id);
+                updateCartCount();
+                
+                // Show notification
+                showNotification(removeNotification);
+                
+                // Render cart items
+                renderCartItems();
+                
+                // Close modal if cart is empty
+                if (cartItems.length === 0) {
+                    cartModal.classList.remove('active');
+                }
+            }
+
+            function renderCartItems() {
+                // Clear the container
+                cartItemsContainer.innerHTML = '';
+                
+                // Add all items
+                if (cartItems.length > 0) {
+                    cartItems.forEach(item => {
+                        const cartItemElement = document.createElement('div');
+                        cartItemElement.className = 'cart-item';
+                        cartItemElement.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <div class="cart-item-title">${item.title}</div>
+                                <div class="cart-item-format">Format: ${item.format}</div>
+                                <div class="cart-item-price">${formatCurrency(item.price)}</div>
+                                <button class="remove-item" data-id="${item.id}">
+                                    <span class="remove-icon">🗑️</span> Remove
+                                </button>
+                            </div>
+                        `;
+                        
+                        cartItemsContainer.appendChild(cartItemElement);
+                    });
+                    
+                    // Add cart total
+                    let total = 0;
+                    cartItems.forEach(item => {
+                        total += getNumericPrice(item.price);
+                    });
+                    
+                    const totalElement = document.createElement('div');
+                    totalElement.className = 'cart-total';
+                    totalElement.innerHTML = `
+                        <span>Total:</span>
+                        <span>${formatCurrency(total.toFixed(2))}</span>
+                    `;
+                    
+                    cartItemsContainer.appendChild(totalElement);
+                    
+                    // Add remove event listeners
+                    document.querySelectorAll('.remove-item').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const id = parseInt(this.getAttribute('data-id'));
+                            removeFromCart(id);
+                        });
+                    });
+                } else {
+                    // Show empty cart message
+                    cartItemsContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Your cart is empty</p>';
+                }
+            }
+
+            // Event Listeners
+            formatOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update selected format
+                    formatOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    selectedFormat = this.getAttribute('data-format');
+                    selectedPrice = this.getAttribute('data-price');
+                    
+                    // Update displayed price
+                    document.querySelector('.price').textContent = formatCurrency(selectedPrice);
+                    
+                    // Calculate original price (adding 15% to the selected price)
+                    const numericPrice = getNumericPrice(selectedPrice);
+                    const originalPrice = (numericPrice * 1.15).toFixed(2);
+                    
+                    // Calculate discount percentage
+                    const discount = Math.round((numericPrice / originalPrice) * 100);
+                    const discountPercentage = 100 - discount;
+                    
+                    // Update price displays
+                    document.querySelector('.original-price').textContent = formatCurrency(originalPrice);
+                    document.querySelector('.discount').textContent = `Save ${discountPercentage}%`;
+                });
+            });
+
+            // Add to Cart
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    // Create a new cart item
+                    const newItem = {
+                        id: Date.now(),
+                        title: 'The Wager: A Tale of Shipwreck, Mutiny and Murder',
+                        format: selectedFormat,
+                        price: selectedPrice,
+                        image: bookCover.src
+                    };
+                    
+                    // Add to cart
+                    cartItems.push(newItem);
+                    updateCartCount();
+                    
+                    // Show notification
+                    showNotification(addNotification);
+                    
+                    // Render cart items
+                    renderCartItems();
+                });
+            }
+
+            // Cart icon click
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function() {
+                    if (cartItems.length > 0) {
+                        cartModal.classList.add('active');
+                    } else {
+                        alert('Your cart is empty');
+                    }
+                });
+            }
+
+            // Close modal
+            if (closeModal) {
+                closeModal.addEventListener('click', function() {
+                    cartModal.classList.remove('active');
+                });
+            }
+
+            // Continue shopping
+            if (continueShoppingBtn) {
+                continueShoppingBtn.addEventListener('click', function() {
+                    cartModal.classList.remove('active');
+                });
+            }
+
+            // Close modal on outside click
+            if (cartModal) {
+                cartModal.addEventListener('click', function(e) {
+                    if (e.target === cartModal) {
+                        cartModal.classList.remove('active');
+                    }
+                });
+            }
+        });
+        </script>
+</body>
+</html>
